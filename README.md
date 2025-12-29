@@ -44,3 +44,13 @@ http://localhost:30420 should work and show the app.
 1. docker build -t qk8128/ml-docker:latest .
 2. docker push qk8128/ml-docker:latest
 3. kubectl rollout restart deployment ml-docker-deployment
+
+# For Github Actions CICD. 
+1. Create .github/workflows/main.yml
+2. If there are secrets needed, e.g. username: ${{ secrets.DOCKER_USERNAME }} and password: ${{ secrets.DOCKER_PASSWORD }}, add to github secrets as such: 
+a. Go to your GitHub repository page.
+b. Click on the Settings tab.
+c. In the left sidebar, expand Secrets and variables, then click on Actions.
+d. Click the New repository secret button.
+e. Create a secret with the name DOCKER_USERNAME and your Docker Hub username 'qk8128' as the value.
+f. Repeat for Docker_PASSWORD
