@@ -1,15 +1,16 @@
 from sklearn.linear_model import LogisticRegression
-import numpy as np
+from sklearn.datasets import load_iris
 
 class Model:
     def __init__(self):
-        self.model = LogisticRegression()
-        # Simple dummy data for training
-        X_train = np.array([[1], [2], [3], [4], [5], [6]])
-        y_train = np.array([0, 0, 0, 1, 1, 1])
-        self.model.fit(X_train, y_train)
+        self.model = LogisticRegression(max_iter=200)
+        iris = load_iris()
+        X, y = iris.data, iris.target
+        self.model.fit(X, y)
+        self.class_names = iris.target_names.tolist()
 
     def predict(self, data):
-        return self.model.predict(data).tolist()
+        predictions = self.model.predict(data).tolist()
+        return [self.class_names[p] for p in predictions]
 
 model = Model()

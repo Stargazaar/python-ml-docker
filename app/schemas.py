@@ -5,4 +5,4 @@ class PredictionRequest(BaseModel):
     data: List[List[float]]
 
 class PredictionResponse(BaseModel):
-    predictions: List[int]
+    predictions: List[str]

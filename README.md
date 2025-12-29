@@ -7,6 +7,13 @@ git clone git clone https://github.com/Stargazaar/python-ml-docker.git
 cd to the repo
 cd python-ml-docker                                          
 
+Switch to feature branch (best practice)
+git checkout -b feature/docker-k8s
+git add .
+git commit -m "Initial commit for branch"
+git push --set-upstream origin feature/docker-k8s
+
+
 2. Open Docker desktop but CMD In IDE: Build docker image. cd to folder containing Dockerfile.
 docker build -t qk8128/ml-docker:latest .
 
@@ -32,3 +39,8 @@ NAME                TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
 ml-docker-service   NodePort   10.110.235.122   <none>        80:30420/TCP   11m
 
 http://localhost:30420 should work and show the app.
+
+# When need to redeploy after making changes:
+1. docker build -t qk8128/ml-docker:latest .
+2. docker push qk8128/ml-docker:latest
+3. kubectl rollout restart deployment ml-docker-deployment
