@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ml-docker-deployment
+  labels:
+    app: ml-docker
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ml-docker
+  template:
+    metadata:
+      labels:
+        app: ml-docker
+    spec:
+      containers:
+      - name: ml-docker
+        image: qk8128/ml-docker:latest
+        ports:
+        - containerPort: 80
