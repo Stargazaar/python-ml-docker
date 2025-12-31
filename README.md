@@ -1,5 +1,14 @@
 # Docker ML Project
-Overview
+This project demonstrates a complete end-to-end machine learning workflow, containerized with Docker and orchestrated with Kubernetes. The primary objective is to learn and apply best practices for deploying a Python-based FastAPI machine learning application.
+The application uses a simple Logistic Regression model trained on the Iris dataset to predict flower species. It includes a basic web frontend for user interaction and a fully automated CI/CD pipeline using GitHub Actions.
+## Tech Stack
+- **Backend**: FastAPI, Uvicorn
+- **Machine Learning**: Scikit-learn, NumPy
+- **Frontend**: HTML, JavaScript (no framework)
+- **Containerization**: Docker
+- **Orchestration**: Kubernetes (via Docker Desktop)
+- **CI/CD**: GitHub Actions
+- **Testing**: Pytest, httpx
 
 1. github initialize
 create new repo from template
@@ -39,7 +48,7 @@ Since we are using DockerDesktop, we use NodePort instead of LoadBalancer, hence
 NAME                TYPE       CLUSTER-IP       EXTERNAL-IP   PORT(S)        AGE
 ml-docker-service   NodePort   10.110.235.122   <none>        80:30420/TCP   11m
 
-http://localhost:30420 should work and show the app.
+http://localhost:30420/static/index.html should work and show the app.
 
 # When need to redeploy after making changes:
 1. docker build and push:
