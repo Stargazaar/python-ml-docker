@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ML-Docker Iris Predictor</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f0f2f5;
+        }
+        .container {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0,0.1);
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        #result {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Iris Flower Predictor</h1>
+        <form id="prediction-form">
+            <div class="form-group">
+                <label for="sepal_length">Sepal Length (cm)</label>
+                <input type="number" id="sepal_length" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label for="sepal_width">Sepal Width (cm)</label>
+                <input type="number" id="sepal_width" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label for="petal_length">Petal Length (cm)</label>
+                <input type="number" id="petal_length" step="0.1" required>
+            </div>
+            <div class="form-group">
+                <label for="petal_width">Petal Width (cm)</label>
+                <input type="number" id="petal_width" step="0.1" required>
+            </div>
+            <button type="submit">Predict</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('prediction-form');
+        const resultDiv = document.getElementById('result');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            
+            const sepal_length = document.getElementById('sepal_length').value;
+            const sepal_width = document.getElementById('sepal_width').value;
+            const petal_length = document.getElementById('petal_length').value;
+            const petal_width = document.getElementById('petal_width').value;
+
+            const data = {
+                data: [
+                    [parseFloat(sepal_length), parseFloat(sepal_width), parseFloat(petal_length), parseFloat(petal_width)]
+                ]
+            };
+
+            try {
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                const prediction = await response.json();
+                resultDiv.textContent = `Prediction: ${prediction.predictions[0]}`;
+                resultDiv.style.color = '#28a745'; // Green color for success
+            } catch (error) {
+                resultDiv.textContent = 'Error: Could not connect to the API.';
+                resultDiv.style.color = '#dc3545'; // Red color for error
+                console.error('Error:', error);
+            }
+        });
+    </script>
+</body>
+</html>

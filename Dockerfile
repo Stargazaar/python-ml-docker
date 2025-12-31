@@ -13,5 +13,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the app directory into the container at /app
 COPY ./app /app/app
 
+# Copy the static directory into the container at /app
+COPY ./static /app/static
+
 # Command to run the application
 CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]

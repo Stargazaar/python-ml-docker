@@ -1,8 +1,12 @@
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from .schemas import PredictionRequest, PredictionResponse
 from .model import model
 
 app = FastAPI()
+
+# Mount the static directory
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 def read_root():
